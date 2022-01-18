@@ -1,0 +1,49 @@
+Name: Samuel Mikell
+Date: 21? October 2021
+Class: Introduction to System Software
+
+Documentation for Pass  of the Assembler thingy
+
+The moment I start writing this I get writer's block but for documentation. Lol
+
+So I want to call out my own little hacky solution to a problem I was facing
+before I go any further. To ensure that a symbol used as an operand has
+been defined before, I did a series of conditions:
+ * 1. Is it in the symbol table (y/N)
+ * * It is. Good do your thing.
+ * * No it's not, so
+ * 2. Can the operand be read as a number in base 16?
+ * * This is the cheesy part. I was pressed for time and couldn't think of
+ * * a better solution, so I went with this. I know like 1 or 2 directives
+ * * read a number as base 10, but all base 10 numbers can be read as
+ * * a base 16 number, since 0-9 are usable in Hex.
+ * * The flaw shows itself if you have a symbol written with the hex
+ * * letters (A-F), it will fall through this little error check.
+ * * I took advantage of your test cases in this case because
+ * * all of the "unused symbol being used as an operand" cases
+ * * have letters outside the hex range of A-F. Therefore,
+ * * in all your test cases this will pass.
+ * * If I had more time I would definitely revise this, but yeah.
+ * * End confession of bad code.
+ * * short version: If you have a symbol called FAD, and you
+ * * mistype it as FADD, it will slip through my error checks.
+ * * the problems of being pressed for time because lazy.
+That was the big thing I wanted to put in my documentation.
+
+I feel like the code is pretty self-explanatory, but I'm finishing
+it the day it's due so there may be a few wacks.
+I basically loop through the .sic file again line-by-line, and
+do my usual checks. Because you don't want to progressively
+write the file, I store all my records in a struct with
+a bunch of arrays, and if I can make it to the END directive
+without any hitches, then I write to the file.
+
+I know you said to not print anything to the console if the program
+succeeds, but I left in a "program exited successfully" printf at the
+very end because having absolutely no response to whether it was a
+successful run or not feels weird to me. Like did you finish or are you
+silently pouting because you hit an error, little program?
+
+I really hate writing documentation. But unfortunately, if you do not
+write documentation then you end up with idiots putting bar soap in
+a liquid soap dispenser. And I don't want that with my code.

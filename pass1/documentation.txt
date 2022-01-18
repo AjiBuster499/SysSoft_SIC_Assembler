@@ -1,0 +1,27 @@
+Name: Samuel Mikell
+Date: 14 September 2021
+Class: Introduction to System Software
+
+Documentation for Pass 1 of the Assembler thingy
+
+The error lines are probably not up to perfect specification, but should be
+good enough. I include the problem element as well as the line. Additionally,
+my only delimiter is the tab, \t. If the separator between the three line
+components is not a tab, then it will fail to tokenize properly and you'll
+get garbage.
+
+To implement the symbol table, I split each line into three components:
+the symbol, the directive/instruction, and the operand. I check if the
+symbol is a valid symbol through the use of symbols.c, and if its not
+I immediately pitch a fit and exit. If it is a valid symbol, I then
+check the directive. Most lines in SIC will advance 3 bytes per line,
+but certain directives can alter that number. Examples include START,
+which sets the starting address, and RESB/RESW/BYTE, which reserve a
+variable amount of space in memory, and offset the address by that
+much. If it is one of those special directives, I adjust the counter
+appropriately based on the operand. Otherwise I simply advance the
+counter by 3 at the end of the loop. The code is pretty self-explanatory.
+I use a regex to check if a given hex string is valid, using <regex.h>.
+It allows both lowercase and uppercase hex, although I personally prefer
+uppercase hex numbers. I am unsure if SIC requires uppercase hex numbers,
+or if either case is fine.
